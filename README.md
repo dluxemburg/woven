@@ -1,5 +1,7 @@
 # Woven
 
+[![Build Status](https://travis-ci.org/dluxemburg/woven.svg?branch=master)](https://travis-ci.org/dluxemburg/woven)
+
 A very *very* immature tool for extracting semating data from web pages, primarily targeting the browser, with no external runtime dependencies.
 
 Include it on your page:
