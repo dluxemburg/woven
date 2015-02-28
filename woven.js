@@ -55,16 +55,17 @@ var reduceElements = function(memo, elems){
 }
 
 var reduceElement = function(memo, child){
-  var prop
+  var prop, val
   if (!utils.elemHasAttr(child, "itemprop")) {
     reduceElements(memo, child.children)
   } else {
     prop = utils.getElemAttrVal(child, "itemprop")
     if (utils.elemHasAttr(child, 'itemscope')) {
-      memo[prop] = mapItem(child)
+      val = mapItem(child)
     } else {
-      memo[prop] = utils.getElemContent(child)
+      val = utils.getElemContent(child)
     }
+    utils.setOrAddVal(memo, prop, val)
   }
   return memo
 }
@@ -74,7 +75,7 @@ exports.getElemContent = function(elem){
   if (exports.elemHasAttr(elem, "content")) {
     return exports.getElemAttrVal(elem, "content")
   } else {
-    return elem.textContent
+    return elem.textContent.trim()
   }
 }
 
@@ -89,6 +90,18 @@ exports.getElemAttrVal = function(elem, attr){
 
 exports.toArray = function(arr){
   return Array.prototype.slice.call(arr)
+}
+
+exports.setOrAddVal = function(target, key, val){
+  if (!target[key]) {
+    target[key] = val
+  } else if(!Array.isArray(target[key])){
+    target[key] = [target[key]]
+    target[key].push(val)
+  } else {
+    target[key].push(val)
+  }
+  return target
 }
 
 exports.firstElemByClass = function(doc, klass){
