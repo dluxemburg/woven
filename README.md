@@ -116,7 +116,7 @@ Work in progress.
 
 #### [hAudio](http://microformats.org/wiki/haudio)
 
-(Look, it's the one I needed)
+(Look, it's the one I needed.)
 
 Given a `docFragment`:
 
@@ -134,7 +134,7 @@ Given a `docFragment`:
 ```
 
 ```javascript
-woven.extractHAudio(document) // =>
+woven.extractHAudio(docFragment) // =>
 [ { fn: 'Start Wearing Purple',
     contributor: 'Gogol Bordello',
     album: 'Underdog World Strike' } ]
@@ -174,3 +174,4 @@ Builds the [Browserified](http://browserify.org/) version, a minified version of
 - More real-world example tests
 - Browser-based tests?
 - Visualizer?
+- Commandline tool?
