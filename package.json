@@ -1,0 +1,30 @@
+{
+  "name": "woven",
+  "version": "0.0.1",
+  "description": "Semanitc data extraction for the web",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/*",
+    "prepublish": "gulp build"
+  },
+  "keywords": [
+    "microdata",
+    "microformat",
+    "semantic",
+    "web",
+    "metadata"
+  ],
+  "author": "Daniel Luxemburg",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "expect.js": "^0.3.1",
+    "gulp": "^3.8.11",
+    "gulp-rename": "^1.2.0",
+    "gulp-sourcemaps": "^1.5.0",
+    "gulp-uglify": "^1.1.0",
+    "jsdom": "^3.1.2",
+    "mocha": "^2.1.0",
+    "vinyl-transform": "^1.0.0"
+  }
+}
