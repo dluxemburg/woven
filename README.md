@@ -75,13 +75,8 @@ woven.extractSchemaItems(docFragment) // =>
      { itemtype: 'http://data-vocabulary.org/Address',
        locality: 'Albuquerque',
        region: 'NM' },
-    locality: 'Albuquerque',
-    region: 'NM',
     title: 'engineer',
-    affiliation: 'ACME Corp' },
-  { itemtype: 'http://data-vocabulary.org/Address',
-    locality: 'Albuquerque',
-    region: 'NM' } ]
+    affiliation: 'ACME Corp' } ]
 ```
 
 ### Page `<meta>` Data

@@ -18,5 +18,6 @@ describe("Person", function(){
     expect(extracted[0].address.region).to.eql("NM")
     expect(extracted[0].address.itemtype)
       .to.eql("http://data-vocabulary.org/Address")
+    console.log(extracted)
   })
 })
