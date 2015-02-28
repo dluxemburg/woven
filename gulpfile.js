@@ -4,21 +4,26 @@ var gulp = require("gulp"),
     rename = require("gulp-rename"),
     uglify = require('gulp-uglify'),
     sourcemaps = require('gulp-sourcemaps'),
-    derequire = require('gulp-derequire')
+    derequire = require('gulp-derequire'),
+    source = require('vinyl-source-stream')
 
 
-gulp.task("default", function(){
-  return gulp.src(["./lib/main.js"])
-  .pipe(transform(function(files){
-    return browserify(files,{
-      standalone: "woven"
-    }).bundle()
-  }))
+gulp.task("build", function(){
+  return browserify({
+    entries: ["./lib/main.js"],
+    standalone: "woven"
+  })
+  .bundle()
+  .pipe(source('woven.js'))
   .pipe(derequire())
   .pipe(rename(function(path){
     path.basename = "woven"
   }))
   .pipe(gulp.dest("."))
+})
+
+gulp.task('default', ['build'], function(){
+  return gulp.src(['woven.js'])
   .pipe(sourcemaps.init())
   .pipe(uglify())
   .pipe(rename(function(path){
