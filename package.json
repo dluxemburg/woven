@@ -15,6 +15,7 @@
     "metadata"
   ],
   "author": "Daniel Luxemburg",
+  "repository": "https://github.com/dluxemburg/woven",
   "license": "ISC",
   "devDependencies": {
     "browserify": "^9.0.3",
