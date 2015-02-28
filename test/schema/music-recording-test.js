@@ -14,6 +14,22 @@ describe("MusicRecording", function(){
       .to.eql("http://schema.org/MusicRecording")
     expect(extracted[0].byArtist.name)
       .to.eql("Arcade Fire")
+    expect(extracted[0].byArtist.itemtype)
+      .to.eql("http://www.schema.org/MusicGroup")
+  })
+
+  describe("tacks", function(){
+    before(helper.loadExample("last-fm-2", examples))
+    it("are all extracted", function(){
+      var title = "London Calling (disc 1: Original LP)"
+      var extracted = woven.extractSchemaItems(examples["last-fm-2"])
+      expect(extracted).to.have.length(1)
+      expect(extracted[0].name).to.eql(title)
+      expect(extracted[0].tracks).to.be.a(Array)
+      expect(extracted[0].tracks.length).to.eql(19)
+      expect(extracted[0].tracks[4].name)
+        .to.eql("Rudie Can't Fail")
+    })
   })
 
 })
