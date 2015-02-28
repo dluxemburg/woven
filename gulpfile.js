@@ -3,7 +3,9 @@ var gulp = require("gulp"),
     transform = require('vinyl-transform'),
     rename = require("gulp-rename"),
     uglify = require('gulp-uglify'),
-    sourcemaps = require('gulp-sourcemaps')
+    sourcemaps = require('gulp-sourcemaps'),
+    derequire = require('gulp-derequire')
+
 
 gulp.task("default", function(){
   return gulp.src(["./lib/main.js"])
@@ -12,6 +14,7 @@ gulp.task("default", function(){
       standalone: "woven"
     }).bundle()
   }))
+  .pipe(derequire())
   .pipe(rename(function(path){
     path.basename = "woven"
   }))
