@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.woven = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 exports.extractSchemaItems = require('./schema').extractSchemaItems
 exports.extractDocumentMeta = require('./meta').extractDocumentMeta
 exports.extractHAudio = require('./microformats').extractHAudio
@@ -36,24 +36,37 @@ exports.extractHAudio = function(doc){
 },{"./utils":5}],4:[function(require,module,exports){
 var utils = require("./utils")
 
+var MATCH_ITEMS = "[itemscope]:not([itemprop])"
+
 exports.extractSchemaItems = function(doc){
-  return utils.toArray(doc.querySelectorAll("[itemtype]"))
-    .map(mapElement)
+  var items = doc.querySelectorAll(MATCH_ITEMS)
+  return utils.toArray(items).map(mapItem)
 }
 
-var mapElement = function(elem){
-  return utils.toArray(elem.querySelectorAll("[itemprop]"))
-    .reduce(function(memo, itemprop){
-      var prop = utils.getElemAttrVal(itemprop, "itemprop")
-      if (utils.elemHasAttr(itemprop, 'itemtype')) {
-        memo[prop] = mapElement(itemprop)
-      } else {
-        memo[prop] = utils.getElemContent(itemprop)
-      }
-      return memo
-    }, {
-      itemtype: utils.getElemAttrVal(elem, "itemtype")
-    })
+var mapItem = function(item){
+  return reduceElements({
+    itemtype: utils.getElemAttrVal(item, "itemtype")
+  }, item.children)
+}
+
+var reduceElements = function(memo, elems){
+  return utils.toArray(elems)
+    .reduce(reduceElement, memo)
+}
+
+var reduceElement = function(memo, child){
+  var prop
+  if (!utils.elemHasAttr(child, "itemprop")) {
+    reduceElements(memo, child.children)
+  } else {
+    prop = utils.getElemAttrVal(child, "itemprop")
+    if (utils.elemHasAttr(child, 'itemscope')) {
+      memo[prop] = mapItem(child)
+    } else {
+      memo[prop] = utils.getElemContent(child)
+    }
+  }
+  return memo
 }
 
 },{"./utils":5}],5:[function(require,module,exports){
@@ -99,4 +112,5 @@ exports.textForFirstElemByClass = function(doc, klass){
 // exports.isNodeList = function(obj){
 //   return /HTMLCollection/.test(obj.toString())
 // }
-},{}]},{},[1]);
+},{}]},{},[1])(1)
+});

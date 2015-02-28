@@ -8,7 +8,9 @@ var gulp = require("gulp"),
 gulp.task("default", function(){
   return gulp.src(["./lib/main.js"])
   .pipe(transform(function(files){
-    return browserify(files).bundle()
+    return browserify(files,{
+      standalone: "woven"
+    }).bundle()
   }))
   .pipe(rename(function(path){
     path.basename = "woven"
