@@ -9,11 +9,12 @@ describe("Person", function(){
 
   it("is extracted from a nested example", function(){
     var extracted = woven.extractSchemaItems(examples["nested"])
-    expect(extracted).to.have.length(2)
+    expect(extracted).to.have.length(1)
     expect(extracted[0].itemtype)
       .to.eql("http://data-vocabulary.org/Person")
     expect(extracted[0].name)
       .to.eql("Bob Smith")
+    expect(extracted[0].region).to.be(undefined)
     expect(extracted[0].address.region).to.eql("NM")
     expect(extracted[0].address.itemtype)
       .to.eql("http://data-vocabulary.org/Address")
