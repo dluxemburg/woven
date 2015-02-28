@@ -17,6 +17,7 @@ var loadExampleDom = exports.loadExampleDom = function(name, fn){
 
 var loadExample = exports.loadExample = function(name, examples){
   return function(done){
+    this.timeout(4000)
     loadExampleDom(name, function(err, dom){
       if (err) return done(err)
       examples[name] = dom
